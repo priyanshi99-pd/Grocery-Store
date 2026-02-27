@@ -1,0 +1,37 @@
+<?php
+include "connect.php";
+session_start();
+
+if(!isset($_SESSION['ebcuser'])) {
+    header("location:login.php");
+}
+
+$cname = $_SESSION['ebcuser'];
+$pid = $_GET['pid'];
+$dt = date('Y-m-d');
+$os = 'AddedInCart';
+
+// Correct column name is USER, not cuname
+$x = mysqli_query($con, "DELETE FROM temp_cart WHERE USER='$cname' AND STATUS='$os' AND pid=$pid");
+
+if($x > 0) {
+?>
+    <script>
+    if(confirm("Item Deleted from cart"))
+        location="showcart.php";
+    else
+        location="showcart.php";
+    </script>
+<?php
+}
+else {
+?>
+    <script>
+    if(confirm("Item Deletion Error"))
+        location="showcart.php";
+    else
+        location="showcart.php";
+    </script>
+<?php
+}
+?>
